@@ -63,6 +63,14 @@ enum MHD_Result MainController (
 	// Log API calls from clients
 	LogAPI(url, method);
 
+	//const char *header = MHD_get_response_header(conn, "Authorization");
+	//if (header)
+	//	printf("Header: %s\n", header);
+	const char *auth_header = MHD_lookup_connection_value
+		(conn, MHD_HEADER_KIND, "Authorization");
+	if (auth_header)
+		printf("Header: %s\n", auth_header);
+
 	// Redirect to the specific controller for each object.
 	// The response is generated after calling a valid API.
 	if (setjmp(ExceptionBuffer) == 0)
