@@ -2,8 +2,8 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <microhttpd.h>
-#include "../../include/utils.h"
 #include "../../include/user.h"
+#include "../../include/msg.h"
 
 /* Manages calls related to the users */
 enum MHD_Result UserController (
@@ -25,7 +25,7 @@ enum MHD_Result UserController (
 	if (strcmp(method, "POST") == 0) {
 		User *u = CreateUser(con_info->json_data);
 		if (!u) {
-			char *msg = SimpleMessage("Invalid data!");
+			char *msg = SimpleMessage("Couldn't create user!");
 			return CreateResponse(conn, msg, BAD_REQUEST, con_info);
 		}
 		InsertUser(u);
@@ -36,7 +36,7 @@ enum MHD_Result UserController (
 	if (strcmp(method, "PUT") == 0 && id) {
 		User *u = CreateUser(con_info->json_data);
 		if (!u) {
-			char *msg = SimpleMessage("Invalid data!");
+			char *msg = SimpleMessage("Couldn't modify user!");
 			return CreateResponse(conn, msg, BAD_REQUEST, con_info);
 		}
 		UpdateUser(u, id);

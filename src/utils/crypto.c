@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "../include/crypto.h"
+#include "../../include/crypto.h"
 
 // Encrypt password (using XOR method)
 char *EncryptPassword(const char *password) {

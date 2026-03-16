@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <mysql/mysql.h>
-#include "../include/query.h"
+#include "../../include/query.h"
 
 /*
 MySQL / MariaDB is used to store the data on the hard drive.
@@ -24,8 +24,8 @@ char *EscapeQuotes(const char *input) {
 	size_t j = 0;
 	for (size_t i = 0; i < len; i++) {
 		if (input[i] == '"') {
-		    result[j++] = '\\';
-		    result[j++] = '"';
+			result[j++] = '\\';
+			result[j++] = '"';
 		} 
 		else {
 			result[j++] = input[i];

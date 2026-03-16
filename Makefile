@@ -1,2 +1,2 @@
 all:
-	gcc src/*.c src/model/*.c src/view/*.c src/controller/*.c -Wall -lmicrohttpd -lmariadb -lcurl -lcjson -lhiredis -lcrypto -O3 -o bin/out
+	gcc src/*.c src/models/*.c src/repositories/*.c src/controllers/*.c src/utils/*.c -Wall -lmicrohttpd -lmariadb -lcurl -lcjson -lhiredis -lcrypto -O3 -o bin/out

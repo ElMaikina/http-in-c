@@ -3,7 +3,7 @@
 #include <string.h>
 #include <stdbool.h>
 #include <hiredis/hiredis.h>
-#include "../include/cache.h"
+#include "../../include/cache.h"
 
 /*
 Redis is used as an in-memory cache dictionary to quickly

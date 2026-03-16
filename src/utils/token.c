@@ -4,7 +4,7 @@
 #include <openssl/hmac.h>
 #include <openssl/buffer.h>
 #include <microhttpd.h>
-#include "../include/token.h"
+#include "../../include/token.h"
 
 /* Converts the URL to base64url */
 char *URLtoBase64(const unsigned char *input, int length) {

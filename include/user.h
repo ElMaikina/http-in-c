@@ -1,7 +1,7 @@
 #ifndef USER_H
 #define USER_H
 
-#include "utils.h"
+#include "msg.h"
 
 typedef struct {
 	long long id;
