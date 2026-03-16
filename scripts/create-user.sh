@@ -1,6 +1,6 @@
 curl -H 'Content-Type: application/json' \
     -d '{
-		"name":"Linus Torvalds",
+		"name":"Vicente Alvear",
 		"email":"linustorvalds@hotmail.com",
 		"password":"TUXforTh3W1n"
     }' \

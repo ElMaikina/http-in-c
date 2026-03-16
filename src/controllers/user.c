@@ -11,15 +11,16 @@ enum MHD_Result UserController (
 	struct MHD_Connection *conn, ConnectionInfo *con_info
 )
 {
-	long long id;
-	sscanf(url, "/users/%lld", &id);
-	
+	long long id = 0;
+	if (strcmp(url, "/users") != 0) {
+		sscanf(url, "/users/%lld", &id);
+	}
 	if (strcmp(method, "GET") == 0) {
 		if (id) {
-			char* result = SelectUser(id);
+			char* result = SelectUserById(id);
 			return CreateResponse(conn, result, MHD_HTTP_OK, con_info);
 		}
-		char* result = ViewAllUsers();
+		char* result = SelectAllUsers();
 		return CreateResponse(conn, result, MHD_HTTP_OK, con_info);
 	}
 	if (strcmp(method, "POST") == 0) {
@@ -30,7 +31,7 @@ enum MHD_Result UserController (
 		}
 		InsertUser(u);
 		FreeUser(u);
-		char* result = ViewLastUser();
+		char* result = SelectLastUser();
 		return CreateResponse(conn, result, MHD_HTTP_OK, con_info);
 	}
 	if (strcmp(method, "PUT") == 0 && id) {
@@ -41,11 +42,11 @@ enum MHD_Result UserController (
 		}
 		UpdateUser(u, id);
 		FreeUser(u);
-		char *result = SelectUser(id);
+		char *result = SelectUserById(id);
 		return CreateResponse(conn, result, MHD_HTTP_OK, con_info);
 	}
 	if (strcmp(method, "DELETE") == 0 && id) {
-		char *result = SelectUser(id);
+		char *result = SelectUserById(id);
 		DeleteUser(id);
 		return CreateResponse(conn, result, MHD_HTTP_OK, con_info);
 	}

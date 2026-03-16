@@ -5,4 +5,4 @@ curl -H 'Content-Type: application/json' \
 		"password":"C4th3W1n"
     }' \
     -X PUT \
-localhost:8000/users/1
+localhost:8000/users/3

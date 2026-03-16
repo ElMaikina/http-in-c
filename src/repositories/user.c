@@ -7,7 +7,7 @@
 #include "../../include/user.h"
 
 /* View all users in database */
-char* ViewAllUsers() {
+char* SelectAllUsers() {
 	char *cache = SearchInCache("users");
 	if (!cache) {
 		const char *query = "SELECT * FROM users";
@@ -19,16 +19,16 @@ char* ViewAllUsers() {
 }
 
 /* Muestra la ultima User insertada */
-char* ViewLastUser() {	
-	const char *query = "SELECT * FROM users ORDER BY ID DESC LIMIT 1";
+char* SelectLastUser() {	
+	const char *query = "SELECT * FROM users ORDER BY id DESC LIMIT 1";
 	char *result = QueryToJSON(query);
 	return result;
 }
 
 /* Muestra una User con cierto ID */
-char* SelectUser(long long id) {
+char* SelectUserById(long long id) {
 	char query[256];
-	snprintf(query, sizeof(query), "SELECT * FROM users WHERE ID = %lld", id);
+	snprintf(query, sizeof(query), "SELECT * FROM users WHERE id = %lld", id);
 	char *result = QueryToJSON(query);
 	return result;
 }
@@ -71,7 +71,7 @@ void DeleteUser(long long id) {
     char query[256];
 	snprintf(query, sizeof(query), "\
 	DELETE FROM users\
-	WHERE ID = %lld", id);
+	WHERE id = %lld", id);
 	QueryToJSON(query);
 	return;
 }
