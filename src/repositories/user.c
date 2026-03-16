@@ -32,3 +32,46 @@ char* SelectUser(long long id) {
 	char *result = QueryToJSON(query);
 	return result;
 }
+
+/* Insert user into database  */
+void InsertUser(User *u) {
+    char query[256];
+    snprintf(query, sizeof(query), "\
+        INSERT INTO users\
+        (name, email, password)\
+        VALUES ('%s', '%s', '%s')",
+        u->name,
+        u->email,
+        u->password
+    );
+	QueryToJSON(query);
+	return;
+}
+
+/* Update user from database */
+void UpdateUser(User *u, long long id) {
+    char query[256];
+    snprintf(query, sizeof(query), "\
+        UPDATE users SET\
+        name = '%s',\
+        email = '%s',\
+        password = '%s'\
+        WHERE ID = %lld",
+        u->name,
+        u->email,
+        u->password,
+        id
+    );
+    QueryToJSON(query);
+	return;
+}
+
+/* Delete user from database */
+void DeleteUser(long long id) {
+    char query[256];
+	snprintf(query, sizeof(query), "\
+	DELETE FROM users\
+	WHERE ID = %lld", id);
+	QueryToJSON(query);
+	return;
+}
