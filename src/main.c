@@ -70,8 +70,8 @@ enum MHD_Result MainController (
 	OutputLogs(url, method);
 
 	// Extracts the user id from incomming JWT
-	long long user_id = 0;
-	user_id = GetUserIdFromJWT(conn);
+	//long long user_id = 0;
+	//user_id = GetUserIdFromJWT(conn);
 
 	// Redirect to the specific controller for each object
 	// The response is generated after calling a valid API

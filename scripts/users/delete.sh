@@ -1,1 +1,1 @@
-curl -H 'Content-Type: application/json' -X DELETE localhost:8000/users/2
+curl -H 'Content-Type: application/json' -X DELETE localhost:8000/users/2 | jq '.'

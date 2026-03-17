@@ -4,4 +4,4 @@ curl -H 'Content-Type: application/json' \
 	"password":"TUXforTh3W1n"
     }' \
     -X POST \
-localhost:8000/users
+localhost:8000/users | jq '.'

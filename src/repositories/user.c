@@ -8,14 +8,14 @@
 
 /* View all users in database */
 char* SelectAllUsers() {
-	char *cache = SearchInCache("users");
-	if (!cache) {
+	//char *cache = SearchInCache("users");
+	//if (!cache) {
 		const char *query = "SELECT * FROM users";
 		char *result = QueryToJSONArray(query);
 		StoreInCache("users", result);
 		return result;
-	}
-	return cache;
+	//}
+	//return cache;
 }
 
 /* Muestra la ultima User insertada */
