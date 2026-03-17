@@ -63,18 +63,26 @@ Then, for the program to function correctly, the necessary services must be star
 so that the backend can perform CRUD operations.
 
 ```
-systemctl start mariadb
-systemctl start valkey
+sudo systemctl start mariadb
+sudo systemctl start valkey
 ```
 
 There is a dump of the database used for the development of this project, you can install it easily using the command:
 
 ```
-mariadb BackEnd_in_C < db.sql
+sudo mariadb BackEnd_in_C < db.sql
 ```
 
 Finally, to run the program, run the following command (as _root_ or using _sudo_):
 
 ```
-./bin/out
+sudo ./bin/out
+```
+
+## ️📚 Backups
+
+To do a backup of the schema run the following command:
+
+```
+sudo mariadb-dump BackEnd_in_C --skip-comments --skip-opt --events --routines --no-data > db.sql
 ```
