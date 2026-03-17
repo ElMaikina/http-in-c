@@ -73,7 +73,7 @@ enum MHD_Result MainController (
 	if (setjmp(ExceptionBuffer) == 0)
 	{
 		if (strcmp(url, "/") == 0) {
-			char *msg = SimpleMessage("Hello!");
+			char *msg = SimpleMessage("Web Server is running!");
 			return CreateResponse(conn, msg, OK, con_info);
 		}
 		if (strstr(url, "/users") != NULL) {
