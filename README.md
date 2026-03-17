@@ -84,5 +84,5 @@ sudo ./bin/out
 To do a backup of the schema run the following command:
 
 ```
-sudo mariadb-dump BackEnd_in_C --skip-comments --skip-opt --events --routines --no-data > db.sql
+sudo mariadb-dump BackEnd_in_C --skip-comments --skip-add-drop-table --skip-add-locks --skip-disable-keys --skip-set-charset --skip-opt --events --routines --no-data > db.sql
 ```

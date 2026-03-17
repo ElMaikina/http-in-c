@@ -3,8 +3,7 @@
 
 #include <openssl/evp.h>
 
-#define SECRET_KEY "clave_super_secreta"
-
+EVP_PKEY *GenerateES256();
 char* Base64URL(const unsigned char *input, int length);
 char* CreateJWT(long long user_id, EVP_PKEY *key);
 int VerifyJWT(const char *token, EVP_PKEY *key);
