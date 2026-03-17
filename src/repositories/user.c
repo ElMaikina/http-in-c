@@ -21,7 +21,7 @@ char* SelectAllUsers() {
 /* Muestra la ultima User insertada */
 char* SelectLastUser() {	
 	const char *query = "SELECT * FROM users ORDER BY id DESC LIMIT 1";
-	char *result = QueryToJSONArray(query);
+	char *result = QueryToJSONObject(query);
 	return result;
 }
 
@@ -29,7 +29,7 @@ char* SelectLastUser() {
 char* SelectUserById(long long id) {
 	char query[256];
 	snprintf(query, sizeof(query), "SELECT * FROM users WHERE id = %lld", id);
-	char *result = QueryToJSONArray(query);
+	char *result = QueryToJSONObject(query);
 	return result;
 }
 
@@ -43,7 +43,7 @@ void InsertUser(User *u) {
         u->email,
         u->password
     );
-	QueryToJSONArray(query);
+	QueryToVoid(query);
 	return;
 }
 
@@ -59,7 +59,7 @@ void UpdateUser(User *u, long long id) {
         u->password,
         id
     );
-    QueryToJSONArray(query);
+    QueryToVoid(query);
 	return;
 }
 
@@ -69,6 +69,6 @@ void DeleteUser(long long id) {
 	snprintf(query, sizeof(query), "\
 	DELETE FROM users\
 	WHERE id = %lld", id);
-	QueryToJSONArray(query);
+	QueryToVoid(query);
 	return;
 }

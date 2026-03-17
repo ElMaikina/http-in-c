@@ -1,6 +1,6 @@
-drop database if exists backend_in_c;
-create database if not exists backend_in_c;
-use backend_in_c;
+drop database if exists BackEnd_in_C;
+create database if not exists BackEnd_in_C;
+use BackEnd_in_C;
 
 drop table if exists `users`;
 create table `users` (
