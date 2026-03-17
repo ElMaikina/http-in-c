@@ -72,7 +72,7 @@ unsigned char *Base64URLDecode(const char *input, int *out_len) {
     return buffer;
 }
 
-EVP_PKEY *GenerarClaveES256() {
+EVP_PKEY *GenerateES256() {
     EVP_PKEY_CTX *ctx = EVP_PKEY_CTX_new_id(EVP_PKEY_EC, NULL);
     EVP_PKEY *pkey = NULL;
     EVP_PKEY_keygen_init(ctx);
@@ -82,7 +82,7 @@ EVP_PKEY *GenerarClaveES256() {
     return pkey;
 }
 
-unsigned char *Firmar (
+unsigned char *Sign (
     EVP_PKEY *key, const unsigned char *data,
     size_t data_len, size_t *sig_len
 )
@@ -96,7 +96,7 @@ unsigned char *Firmar (
     return sig;
 }
 
-int Verificar (
+int Verify (
     EVP_PKEY *key, const unsigned char *data,
     size_t data_len, unsigned char *sig, size_t sig_len
 )
@@ -140,7 +140,7 @@ char *CreateJWT(long long user_id, EVP_PKEY *key) {
     char signing_input[512];
     sprintf(signing_input, "%s.%s", h64, p64);
     size_t der_len;
-    unsigned char *der = Firmar (
+    unsigned char *der = Sign (
         key, (unsigned char*)signing_input,
         strlen(signing_input), &der_len
     );
@@ -182,7 +182,7 @@ int VerifyJWT(const char *token, EVP_PKEY *key) {
     size_t der_len;
     unsigned char *der = RS_a_DER(sig, &der_len);
 
-    int ok = Verificar (
+    int ok = Verify (
         key, (unsigned char*)signing_input,
         strlen(signing_input), der, der_len
     );
