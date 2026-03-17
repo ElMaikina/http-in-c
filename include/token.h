@@ -7,6 +7,6 @@ EVP_PKEY *GenerateES256();
 char* Base64URL(const unsigned char *input, int length);
 char* CreateJWT(long long user_id, EVP_PKEY *key);
 int VerifyJWT(const char *token, EVP_PKEY *key);
-long long GetUserIdFromJWT(struct MHD_Connection *conn);
+long long GetIdFromJWT(struct MHD_Connection *conn);
 
 #endif

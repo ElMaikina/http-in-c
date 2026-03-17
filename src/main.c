@@ -7,6 +7,7 @@
 #include <curl/curl.h>
 #include "../include/msg.h"
 #include "../include/user.h"
+#include "../include/auth.h"
 #include "../include/token.h"
 #include <time.h>
 
@@ -69,10 +70,6 @@ enum MHD_Result MainController (
 	// Log API calls from clients
 	OutputLogs(url, method);
 
-	// Extracts the user id from incomming JWT
-	//long long user_id = 0;
-	//user_id = GetUserIdFromJWT(conn);
-
 	// Redirect to the specific controller for each object
 	// The response is generated after calling a valid API
 	if (setjmp(ExceptionBuffer) == 0)
@@ -81,9 +78,14 @@ enum MHD_Result MainController (
 			char *msg = SimpleMessage("Web Server is running!");
 			return CreateResponse(conn, msg, OK, con_info);
 		}
+		if (strstr(url, "/auth") != NULL) {
+			return AuthController(url, method, conn, con_info, key);
+		}
+		/*
 		if (strstr(url, "/users") != NULL) {
 			return UserController(url, method, conn, con_info);
 		}
+		*/
 		char *msg = SimpleMessage("Resource not found");
 		return CreateResponse(conn, msg, NOT_FOUND, con_info);
 	}

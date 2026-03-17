@@ -6,7 +6,6 @@
 #include "../../include/crypto.h"
 #include "../../include/user.h"
 
-/* View all users in database */
 char* SelectAllUsers() {
 	const char *query = "SELECT * FROM users";
 	char *result = QueryToJSONArray(query);
@@ -14,14 +13,12 @@ char* SelectAllUsers() {
 	return result;
 }
 
-/* Muestra la ultima User insertada */
 char* SelectLastUser() {	
 	const char *query = "SELECT * FROM users ORDER BY id DESC LIMIT 1";
 	char *result = QueryToJSONObject(query);
 	return result;
 }
 
-/* Muestra una User con cierto ID */
 char* SelectUserById(long long id) {
 	char query[256];
 	snprintf(query, sizeof(query), "SELECT * FROM users WHERE id = %lld", id);
@@ -29,7 +26,6 @@ char* SelectUserById(long long id) {
 	return result;
 }
 
-/* Insert user into database  */
 void InsertUser(User *u) {
     char query[256];
     snprintf(query, sizeof(query), "\
@@ -43,7 +39,6 @@ void InsertUser(User *u) {
 	return;
 }
 
-/* Update user from database */
 void UpdateUser(User *u, long long id) {
     char query[256];
     snprintf(query, sizeof(query), "\
@@ -59,7 +54,6 @@ void UpdateUser(User *u, long long id) {
 	return;
 }
 
-/* Delete user from database */
 void DeleteUser(long long id) {
     char query[256];
 	snprintf(query, sizeof(query), "\
@@ -67,4 +61,25 @@ void DeleteUser(long long id) {
 	WHERE id = %lld", id);
 	QueryToVoid(query);
 	return;
+}
+
+char* SelectUserByEmail(char *mail) {
+	char query[256];
+	snprintf(query, sizeof(query), "\
+    SELECT * FROM users\
+    WHERE email = '%s'\
+    LIMIT 1", mail);
+	char *result = QueryToJSONObject(query);
+	return result;
+}
+
+long long SelectIdByCredentials(char *mail, char *pass) {
+	char query[256];
+	snprintf(query, sizeof(query), "\
+    SELECT id FROM users\
+    WHERE email = '%s'\
+    AND password = '%s'\
+    LIMIT 1", mail, pass);
+	long long id = QueryToId(query);
+	return id;
 }

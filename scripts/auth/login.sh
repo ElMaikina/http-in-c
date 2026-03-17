@@ -4,4 +4,4 @@ curl -H 'Content-Type: application/json' \
 	"password":"12345"
     }' \
     -X POST \
-localhost:8000/auth/signup | jq '.'
+localhost:8000/auth/login | jq '.'

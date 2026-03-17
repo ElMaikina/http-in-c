@@ -193,7 +193,7 @@ int VerifyJWT(const char *token, EVP_PKEY *key) {
     return ok;
 }
 
-long long GetUserIdFromJWT(struct MHD_Connection *conn) {
+long long GetIdFromJWT(struct MHD_Connection *conn) {
     long long user_id = 0;
     int len;
 	const char *auth_header = MHD_lookup_connection_value

@@ -97,6 +97,39 @@ char *QueryToJSONObject(const char *query) {
 	return json;
 }
 
+/* Extract only the row id from a query */
+long long QueryToId(const char *query) {
+	long long id = 0;
+	MYSQL *con = mysql_init(NULL);
+	if (con == NULL) {
+		return id;
+	}
+	if (mysql_real_connect(con, MYSQL_HOST, MYSQL_USER, NULL, DB, 0, NULL, 0) == NULL) {
+		return id;
+	}
+	if (mysql_query(con, query)) {
+		return id;
+	}
+	MYSQL_RES *result = mysql_store_result(con);
+	if (result == NULL) {
+		return id;
+	}
+	int num_fields = mysql_num_fields(result);
+	int num_rows = mysql_num_rows(result);
+	if (num_rows != 1) {
+		return id;
+	}
+	if (num_fields >= 1) {
+		MYSQL_ROW row = mysql_fetch_row(result);
+		const MYSQL_FIELD *field = mysql_fetch_field_direct(result, 0);
+		if (IS_NUM(field->type) && row[0])
+			id = (long long)row[0];
+	}
+	mysql_free_result(result);
+	mysql_close(con);
+	return id;
+}
+
 /* Take the MySQL result and convert it to a JSON array */
 char *ResultToJSONArray(MYSQL_RES *result) {
 	int num_fields = mysql_num_fields(result);
@@ -146,8 +179,7 @@ char *ResultToJSONObject(MYSQL_RES *result) {
 	char *json = (char *)malloc(total_size);
 	json[0] = '\0';
 	if (num_rows == 0) {
-		strcat(json, "");
-		return json;
+		return NULL;
 	}
 	MYSQL_ROW row = mysql_fetch_row(result);
 	strcat(json, "{");

@@ -14,6 +14,7 @@
 bool QueryToVoid(const char *query);
 char* QueryToJSONArray(const char *query);
 char* QueryToJSONObject(const char *query);
+long long QueryToId(const char *query);
 char* ResultToJSONArray(MYSQL_RES *result);
 char* ResultToJSONObject(MYSQL_RES *result);
 
