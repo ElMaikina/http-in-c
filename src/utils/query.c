@@ -36,7 +36,7 @@ char *EscapeQuotes(const char *input) {
 }
 
 /* Run query in MySQL and return a result in JSON */
-char *QueryToJSON(const char *query) {
+char *QueryToJSONArray(const char *query) {
 	MYSQL *con = mysql_init(NULL);
 	if (con == NULL) {
 		return NULL;
@@ -51,14 +51,14 @@ char *QueryToJSON(const char *query) {
 	if (result == NULL) {
 		return NULL;
 	}
-	char *json = ResultToJSON(result);
+	char *json = ResultToJSONArray(result);
 	mysql_free_result(result);
 	mysql_close(con);
 	return json;
 }
 
 /* Take the MySQL result and convert it to JSON */
-char *ResultToJSON(MYSQL_RES *result) {
+char *ResultToJSONArray(MYSQL_RES *result) {
 	int num_fields = mysql_num_fields(result);
 	int num_rows = mysql_num_rows(result);
 	int curr_row = 0;

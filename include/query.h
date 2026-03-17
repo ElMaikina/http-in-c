@@ -10,8 +10,7 @@
 // Database name for this project
 #define DB "BackEnd_in_C"
 
-char* EscapeQuotes(const char *input);
-char* QueryToJSON(const char *query);
-char* ResultToJSON(MYSQL_RES *result);
+char* QueryToJSONArray(const char *query);
+char* ResultToJSONArray(MYSQL_RES *result);
 
 #endif

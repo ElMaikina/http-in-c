@@ -11,7 +11,7 @@ char* SelectAllUsers() {
 	char *cache = SearchInCache("users");
 	if (!cache) {
 		const char *query = "SELECT * FROM users";
-		char *result = QueryToJSON(query);
+		char *result = QueryToJSONArray(query);
 		StoreInCache("users", result);
 		return result;
 	}
@@ -21,7 +21,7 @@ char* SelectAllUsers() {
 /* Muestra la ultima User insertada */
 char* SelectLastUser() {	
 	const char *query = "SELECT * FROM users ORDER BY id DESC LIMIT 1";
-	char *result = QueryToJSON(query);
+	char *result = QueryToJSONArray(query);
 	return result;
 }
 
@@ -29,7 +29,7 @@ char* SelectLastUser() {
 char* SelectUserById(long long id) {
 	char query[256];
 	snprintf(query, sizeof(query), "SELECT * FROM users WHERE id = %lld", id);
-	char *result = QueryToJSON(query);
+	char *result = QueryToJSONArray(query);
 	return result;
 }
 
@@ -43,7 +43,7 @@ void InsertUser(User *u) {
         u->email,
         u->password
     );
-	QueryToJSON(query);
+	QueryToJSONArray(query);
 	return;
 }
 
@@ -59,7 +59,7 @@ void UpdateUser(User *u, long long id) {
         u->password,
         id
     );
-    QueryToJSON(query);
+    QueryToJSONArray(query);
 	return;
 }
 
@@ -69,6 +69,6 @@ void DeleteUser(long long id) {
 	snprintf(query, sizeof(query), "\
 	DELETE FROM users\
 	WHERE id = %lld", id);
-	QueryToJSON(query);
+	QueryToJSONArray(query);
 	return;
 }
