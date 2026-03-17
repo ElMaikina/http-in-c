@@ -1,6 +1,6 @@
 curl -H 'Content-Type: application/json' \
     -d '{
-	"email":"elmaikina@gmail.com",
+	"email":"chubigod@gmail.com",
 	"password":"TUXforTh3W1n"
     }' \
     -X POST \

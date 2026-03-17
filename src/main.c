@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <microhttpd.h>
+#include <openssl/evp.h>
 #include <setjmp.h>
 #include <unistd.h>
 #include <curl/curl.h>
@@ -33,6 +34,10 @@ enum MHD_Result MainController (
 	size_t *data_size, void **con_cls
 )
 {
+	// The EVP key is read from the controller
+	// and is shared between all connections
+	EVP_PKEY *key = (EVP_PKEY *)cls;
+
 	// If a POST request is called, a memory
 	// buffer is created for incomming data.
 	ConnectionInfo *con_info = *con_cls;
@@ -68,8 +73,8 @@ enum MHD_Result MainController (
 	long long user_id = 0;
 	user_id = GetUserIdFromJWT(conn);
 
-	// Redirect to the specific controller for each object.
-	// The response is generated after calling a valid API.
+	// Redirect to the specific controller for each object
+	// The response is generated after calling a valid API
 	if (setjmp(ExceptionBuffer) == 0)
 	{
 		if (strcmp(url, "/") == 0) {
@@ -95,13 +100,15 @@ its own thread in parallel.
 */
 int main() {
 	printf("Starting Web Server...\n");
+	EVP_PKEY *key = GenerateES256();
 	struct MHD_Daemon *daemon;
 	daemon = MHD_start_daemon(MHD_USE_THREAD_PER_CONNECTION, PORT,
-		NULL, NULL, &MainController, NULL, MHD_OPTION_END);
+		NULL, NULL, &MainController, key, MHD_OPTION_END);
 	printf("Open: http://localhost:%d/\n", PORT);
 	while (1) {
 		sleep(1);
 	}
 	MHD_stop_daemon(daemon);
+    EVP_PKEY_free(key);
 	return 0;
 }
