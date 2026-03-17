@@ -15,7 +15,7 @@
 jmp_buf ExceptionBuffer;
 
 /* Outputs the request and method called by the client */
-void LogAPI(const char *url, const char *method) {
+void OutputLogs(const char *url, const char *method) {
 	time_t mytime = time(NULL);
     char * time_str = ctime(&mytime);
     time_str[strlen(time_str)-1] = '\0';
@@ -67,7 +67,7 @@ enum MHD_Result MainController (
 		return CreateResponse(conn, "", MHD_HTTP_OK, con_info);
 
 	// Log API calls from clients
-	LogAPI(url, method);
+	OutputLogs(url, method);
 
 	// Extracts the user id from incomming JWT
 	long long user_id = 0;
