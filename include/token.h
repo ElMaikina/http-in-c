@@ -1,11 +1,13 @@
 #ifndef TOKEN_H
 #define TOKEN_H
 
+#include <openssl/evp.h>
+
 #define SECRET_KEY "clave_super_secreta"
 
-char* URLtoBase64(const unsigned char *input, int length);
-char* CreateJWT(const char *correo);
-int VerifyJWT(const char *token);
-char* ObtainJWT(struct MHD_Connection *connection);
+char* Base64URL(const unsigned char *input, int length);
+char* CreateJWT(long long user_id, EVP_PKEY *key);
+int VerifyJWT(const char *token, EVP_PKEY *key);
+long long GetUserIdFromJWT(struct MHD_Connection *conn);
 
 #endif

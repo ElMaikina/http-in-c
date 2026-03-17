@@ -38,9 +38,8 @@ void InsertUser(User *u) {
     char query[256];
     snprintf(query, sizeof(query), "\
         INSERT INTO users\
-        (name, email, password)\
-        VALUES ('%s', '%s', '%s')",
-        u->name,
+        (email, password)\
+        VALUES ('%s', '%s')",
         u->email,
         u->password
     );
@@ -53,11 +52,9 @@ void UpdateUser(User *u, long long id) {
     char query[256];
     snprintf(query, sizeof(query), "\
         UPDATE users SET\
-        name = '%s',\
         email = '%s',\
         password = '%s'\
-        WHERE ID = %lld",
-        u->name,
+        WHERE id = %lld",
         u->email,
         u->password,
         id

@@ -6,6 +6,7 @@
 #include <curl/curl.h>
 #include "../include/msg.h"
 #include "../include/user.h"
+#include "../include/token.h"
 #include <time.h>
 
 #define PORT 8000
@@ -63,13 +64,9 @@ enum MHD_Result MainController (
 	// Log API calls from clients
 	LogAPI(url, method);
 
-	//const char *header = MHD_get_response_header(conn, "Authorization");
-	//if (header)
-	//	printf("Header: %s\n", header);
-	const char *auth_header = MHD_lookup_connection_value
-		(conn, MHD_HEADER_KIND, "Authorization");
-	if (auth_header)
-		printf("Header: %s\n", auth_header);
+	// Extracts the user id from incomming JWT
+	long long user_id = 0;
+	user_id = GetUserIdFromJWT(conn);
 
 	// Redirect to the specific controller for each object.
 	// The response is generated after calling a valid API.
@@ -82,7 +79,7 @@ enum MHD_Result MainController (
 		if (strstr(url, "/users") != NULL) {
 			return UserController(url, method, conn, con_info);
 		}
-		char *msg = SimpleMessage("Not found");
+		char *msg = SimpleMessage("Resource not found");
 		return CreateResponse(conn, msg, NOT_FOUND, con_info);
 	}
 	// Request was invalid or couldn't be processed

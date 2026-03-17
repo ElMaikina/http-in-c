@@ -5,7 +5,6 @@
 
 typedef struct {
 	long long id;
-    char *name;
     char *email;
     char *password;
 } User;

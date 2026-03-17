@@ -12,12 +12,6 @@ User *CreateUser(const char* json_str) {
         return NULL;
     }
     User *u = malloc(sizeof(User));
-    if (cJSON* name = cJSON_GetObjectItemCaseSensitive(json, "name")) {
-        u->name = strdup(name->valuestring);
-    }
-    else {
-        return NULL;
-    }
     if (cJSON* email = cJSON_GetObjectItemCaseSensitive(json, "email")) {
         u->email = strdup(email->valuestring);
     }
@@ -36,7 +30,6 @@ User *CreateUser(const char* json_str) {
 
 /* Free memory from a user struct */
 void FreeUser(User *u) {
-    free(u->name);
     free(u->email);
     free(u->password);
 }
